@@ -7,7 +7,10 @@ import seaborn as sns
 train = pd.read_csv('titanic_train.csv')
 test = pd.read_csv('titanic_test.csv')
 
-sns.heatmap(train.isnull(), yticklabels=False, cbar=False, cmap='viridis')
+# sns.heatmap(train.isnull(), yticklabels=False, cbar=False, cmap='viridis')
+
+sns.set_style('whitegrid')
+sns.countplot(x='Survived', hue='Pclass', data=train, palette='RdBu_r')
 
 plt.show()
 
