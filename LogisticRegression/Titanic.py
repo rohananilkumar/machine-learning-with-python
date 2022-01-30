@@ -3,6 +3,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
 
 train = pd.read_csv('titanic_train.csv')
 test = pd.read_csv('titanic_test.csv')
@@ -42,15 +43,30 @@ train.drop('Cabin', axis=1, inplace=True)
 test.drop('Cabin', axis=1, inplace=True)
 train.dropna(inplace=True)
 test.dropna(inplace=True)
-sns.heatmap(test.isnull(), yticklabels=False, cbar=False, cmap='viridis')
+# sns.heatmap(test.isnull(), yticklabels=False, cbar=False, cmap='viridis')
 
 #Dealing with categorical columns
-sex = pd.get_dummies(train['Sex'], drop_first=True)
-embark = pd.get_dummies(train['Embarked'], drop_first=True)
-train = pd.concat([train, sex, embark], axis=1)
+sexTrain = pd.get_dummies(train['Sex'], drop_first=True)
+embarkTrain = pd.get_dummies(train['Embarked'], drop_first=True)
+train = pd.concat([train, sexTrain, embarkTrain], axis=1)
 
+sexTest =  pd.get_dummies(test['Sex'], drop_first=True)
+embarkTest = pd.get_dummies(test['Embarked'], drop_first=True)
+test = pd.concat([test, sexTest, embarkTest], axis=1)
 #drop unwanted
 train.drop(['Sex','Embarked','Name','Ticket', 'PassengerId'], axis=1, inplace=True)
+
+# Splitting to train test split
+X_train= train.drop('Survived', axis=1)
+y_train= train['Survived']
+
+X_test= test.drop('Survived', axis=1)
+y_test= test['Survived']
+
+# Or You could use the train test split like the last one
+# X= train.drop('Survived', axis=1)
+# y= train['Survived']
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 plt.show()
 
