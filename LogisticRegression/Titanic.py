@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
 
 train = pd.read_csv('titanic_train.csv')
 test = pd.read_csv('titanic_test.csv')
@@ -57,16 +59,25 @@ test = pd.concat([test, sexTest, embarkTest], axis=1)
 train.drop(['Sex','Embarked','Name','Ticket', 'PassengerId'], axis=1, inplace=True)
 
 # Splitting to train test split
-X_train= train.drop('Survived', axis=1)
-y_train= train['Survived']
+# X_train= train.drop('Survived', axis=1)
+# y_train= train['Survived']
 
-X_test= test.drop('Survived', axis=1)
-y_test= test['Survived']
+# X_test= test.drop('Survived', axis=1)
+# y_test= test['Survived']
 
 # Or You could use the train test split like the last one
-# X= train.drop('Survived', axis=1)
-# y= train['Survived']
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+X= train.drop('Survived', axis=1)
+y= train['Survived']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=101)
 
+#training
+logModel = LogisticRegression()
+logModel.fit(X_train, y_train)
+
+predictions = logModel.predict(X_test)
+
+#Evaluating model
+print(classification_report(y_test, predictions))
+print(confusion_matrix(y_test, predictions))
 plt.show()
 
