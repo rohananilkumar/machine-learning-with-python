@@ -37,9 +37,17 @@ def impute_age(cols):
         return Age
 
 train['Age'] = train[['Age', 'Pclass']].apply(impute_age, axis=1)
-
+train.drop('Cabin', axis=1, inplace=True)
+train.dropna(inplace=True)
 # sns.heatmap(train.isnull(), yticklabels=False, cbar=False, cmap='viridis')
 
+#Dealing with categorical columns
+sex = pd.get_dummies(train['Sex'], drop_first=True)
+embark = pd.get_dummies(train['Embarked'], drop_first=True)
+train = pd.concat([train, sex, embark], axis=1)
+
+#drop unwanted column
+train.drop(['Sex','Embarked','Name','Ticket', 'PassengerId'], axis=1, inplace=True)
 
 plt.show()
 
