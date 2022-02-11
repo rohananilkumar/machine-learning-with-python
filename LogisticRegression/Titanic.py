@@ -45,7 +45,7 @@ train.drop('Cabin', axis=1, inplace=True)
 test.drop('Cabin', axis=1, inplace=True)
 train.dropna(inplace=True)
 test.dropna(inplace=True)
-# sns.heatmap(test.isnull(), yticklabels=False, cbar=False, cmap='viridis')
+sns.heatmap(test.isnull(), yticklabels=False, cbar=False, cmap='viridis')
 
 #Dealing with categorical columns
 sexTrain = pd.get_dummies(train['Sex'], drop_first=True)

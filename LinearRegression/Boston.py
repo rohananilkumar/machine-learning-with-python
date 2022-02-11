@@ -10,7 +10,7 @@ boston = load_boston()
 X = pd.DataFrame(boston['data'], columns= boston['feature_names'])
 y = boston['target']
 
-# sns.heatmap(X.corr())
+sns.heatmap(X.corr())
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
@@ -19,4 +19,4 @@ lm.fit(X_train, y_train)
 
 cdf = pd.DataFrame(lm.coef_, X.columns)
 print(cdf)
-# plt.show()
+plt.show()
