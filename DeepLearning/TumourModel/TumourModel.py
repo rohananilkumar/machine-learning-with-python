@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
 from sklearn.metrics import mean_absolute_error, mean_squared_error,explained_variance_score
 from tensorflow.keras.callbacks import EarlyStopping
 
@@ -26,9 +27,14 @@ scaler = MinMaxScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
+# Adding dropout layers to stop train perceptrons to prevent overfitting
 model = Sequential()
+
 model.add(Dense(30, activation='relu'))
+model.add(Dropout(0.5)) # half of the perceptrons will be turned off randomly while training
+
 model.add(Dense(15, activation='relu'))
+model.add(Dropout(0.5))
 
 # Binary Classification
 model.add(Dense(1, activation='sigmoid'))
